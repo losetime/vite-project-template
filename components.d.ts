@@ -54,5 +54,6 @@ declare module '@vue/runtime-core' {
     ToolsRecord: typeof import('./src/components/storehouse/ToolsRecord.vue')['default']
     UpdatePassword: typeof import('./src/components/userCenter/UpdatePassword.vue')['default']
     YmTable: typeof import('./src/components/common/YmTable.vue')['default']
+    YmTree: typeof import('./src/components/common/YmTree.vue')['default']
   }
 }

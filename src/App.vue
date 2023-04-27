@@ -19,7 +19,6 @@ const appStore = useAppStore()
 watch(
   () => appStore.$state,
   (val: any) => {
-    console.log('appStore.$state', appStore.$state)
     sessionStorage.setItem('appStore', JSON.stringify(val))
   },
   {

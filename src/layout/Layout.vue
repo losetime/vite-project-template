@@ -8,7 +8,7 @@
         <RouterView>
           <template #default="{ Component, route }">
             <transition name="fade" mode="out-in" appear>
-              <component :is="Component" :key="route.fullPath" />
+              <component :is="Component" :key="route.fullPath" class="main-content" />
             </transition>
           </template>
         </RouterView>
@@ -40,9 +40,7 @@ onMounted(() => {
     display: flex;
     .main-wrapper {
       flex: 1;
-      height: calc(100vh - 102px);
-      width: 100%;
-      .main-wrap {
+      .main-content {
         height: calc(100vh - 138px);
         margin: 0 14px;
         box-sizing: border-box;

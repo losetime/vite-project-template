@@ -11,7 +11,7 @@
       </a-breadcrumb>
     </div>
     <!-- 全局操作 -->
-    <!-- <global-handle /> -->
+    <BidSection />
   </div>
 </template>
 
@@ -20,7 +20,7 @@ import { computed } from 'vue'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import { useRoute } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
-// import GlobalHandle from '@/components/common/GlobalHandle.vue'
+import BidSection from '@/components/common/BidSection.vue'
 
 const route = useRoute()
 

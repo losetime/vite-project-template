@@ -10,9 +10,7 @@ const modules = Object.assign(views, components)
 
 // 路由等级提升
 export function promoteRouteLevel(routeModule: any) {
-  // window.console.log('将所有子路由添加到二级路由1', routeModule)
   const routerInfo: any = formattRouter([routeModule], [])[0]
-  // window.console.log('将所有子路由添加到二级路由2', routeModule, routerInfo)
   // Use vue-router to splice menus
   // 使用vue-router拼接菜单
   // createRouter 创建一个可以被 Vue 应用程序使用的路由实例
@@ -22,14 +20,11 @@ export function promoteRouteLevel(routeModule: any) {
   })
   // getRoutes： 获取路由记录的完整列表。
   const routes = router.getRoutes()
-  // window.console.log('获取所有路由记录的完整列表', routes);
   // 将所有子路由添加到二级路由
   addToChildren(routes, routerInfo.children || [], routerInfo)
   router = null
   // omit lodash的函数 对传入的item对象的children进行删除
   routerInfo.children = routerInfo.children?.map((item: any) => omit(item, 'children'))
-  // window.console.log('将所有子路由添加到二级路由1', routes)
-  window.console.log('将所有子路由添加到二级路由2', routerInfo)
   return routerInfo
 }
 
@@ -67,7 +62,6 @@ const formattRouter = (data: any[], routerArr: any[]): any[] => {
         level: item.level,
         icon: item.icon,
         visible: item.visible === '0',
-        link: item.path,
       },
       children: [],
     })

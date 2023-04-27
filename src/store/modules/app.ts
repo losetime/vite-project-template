@@ -29,7 +29,6 @@ interface AppState {
   encryptEnable: boolean
   routeInfo: any[]
   sidebarStatus: boolean
-  cycleReminderNum: number
 }
 
 export const useAppStore = defineStore({
@@ -50,8 +49,7 @@ export const useAppStore = defineStore({
     randomString: '',
     encryptEnable: false,
     routeInfo: [],
-    sidebarStatus: true,
-    cycleReminderNum: 0,
+    sidebarStatus: false,
   }),
   actions: {
     /**
@@ -75,7 +73,6 @@ export const useAppStore = defineStore({
         const firstLevelRoute = router.getRoutes().filter((val) => val.meta.level === 1)
         const routerName = firstLevelRoute[0].name
         router.replace({ name: routerName })
-        console.log(2123, router.getRoutes())
       }
     },
     /**

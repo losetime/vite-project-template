@@ -8,10 +8,7 @@
         <RouterView>
           <template #default="{ Component, route }">
             <transition name="fade" mode="out-in" appear>
-              <keep-alive v-if="openCache" :include="getCaches">
-                <component :is="Component" :key="route.fullPath" />
-              </keep-alive>
-              <component v-else :is="Component" :key="route.fullPath" />
+              <component :is="Component" :key="route.fullPath" />
             </transition>
           </template>
         </RouterView>
@@ -36,7 +33,7 @@ onMounted(() => {
   }
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .app-wrapper {
   background-color: #f0f2f5;
   .container-wrap {
@@ -61,16 +58,6 @@ onMounted(() => {
           margin-top: 14px;
           height: calc(100% - 74px);
         }
-      }
-      .main-sub-wrap {
-        height: calc(100vh - 138px);
-        margin: 0 14px;
-        overflow: auto;
-      }
-      .four-level-wrap {
-        height: calc(100vh - 138px);
-        margin: 0 14px;
-        overflow: auto;
       }
     }
   }

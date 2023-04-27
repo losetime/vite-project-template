@@ -84,7 +84,7 @@ import { apiGetDicts } from '@/service/api/common'
 import { receiveRecordColumns } from '@/enums/tableHeadEnum'
 import { actionTypeEnum } from '@/enums/commonEnum'
 import useSectionCode from '@/hooks/useSectionCode'
-import VideoPlayer from '@/components/common/VideoPlayer.vue'
+import VideoPlayer from '@/components/storehouse/VideoPlayer.vue'
 import { message } from 'ant-design-vue'
 import { toolStatusEnum } from '@/enums/storehouseEnum'
 

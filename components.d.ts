@@ -53,6 +53,7 @@ declare module '@vue/runtime-core' {
     ToolsReceiveDetail: typeof import('./src/components/storehouse/ToolsReceiveDetail.vue')['default']
     ToolsRecord: typeof import('./src/components/storehouse/ToolsRecord.vue')['default']
     UpdatePassword: typeof import('./src/components/userCenter/UpdatePassword.vue')['default']
+    VideoPlayer: typeof import('./src/components/storehouse/VideoPlayer.vue')['default']
     YmTable: typeof import('./src/components/common/YmTable.vue')['default']
     YmTree: typeof import('./src/components/common/YmTree.vue')['default']
   }

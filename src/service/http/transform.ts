@@ -67,7 +67,6 @@ export const transform: AxiosTransform = {
         }
       }
     }
-    console.log('处理config', config)
     return config
   },
 
@@ -106,7 +105,6 @@ export const transform: AxiosTransform = {
         config.headers.Authorization = `Bearer ${token}`
       }
     }
-    console.log(config)
     return config
   },
 

@@ -16,9 +16,6 @@
           <template #title>{{ item.meta.title }}</template>
           <template v-for="subItem in item.children">
             <a-menu-item v-if="isVisibleRoute(subItem)" :key="subItem.name">
-              <!-- <template #icon>
-                <Iconfont :type="subItem.meta.icon" class="icon-font" />
-              </template> -->
               <span>{{ subItem.meta.title }}</span>
             </a-menu-item>
           </template>
@@ -36,19 +33,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
+import { useWarehouseStore } from '@/store/modules/warehouse'
 import Iconfont from '@/components/common/Iconfont.vue'
 import { isVisibleNextRoute, isVisibleRoute } from '@/utils/base'
-// import { apiGetRoutersInfo } from '@/service/api/login'
 
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
+const warehouseStore = useWarehouseStore()
 
 // 所有二级导航菜单
-// const sidebarMenu = computed<Array<any>>(() => route.matched[0].children)
 const sidebarMenu = ref<any[]>([])
 
 // 匹配当前二级导航
@@ -60,25 +57,7 @@ const sidebarStatus = computed(() => appStore.sidebarStatus)
 const routeInfo = computed(() => appStore.routeInfo)
 
 // 检验周期提醒
-const cycleReminderNum = computed(() => appStore.cycleReminderNum)
-
-// watchEffect(() => {
-//   if (route.matched[0].children.length > 0) {
-//     navKey.value = isVisibleNextRoute(route.matched[1])
-//       ? ([route.matched[2].name] as string[])
-//       : ([route.matched[1].name] as string[])
-//   }
-// })
-
-onMounted(() => {})
-
-// const getRouters = async () => {
-//   const { code, data } = await apiGetRoutersInfo()
-//   if (code === 20000) {
-//     sidebarMenu.value = handleFormattMenu(data, [])[0].children
-//     console.log('menu', sidebarMenu.value)
-//   }
-// }
+const cycleReminderNum = computed(() => warehouseStore.cycleReminderNum)
 
 const handleFormattMenu = (data: any[], menu: any[]): any[] => {
   for (const [index, item] of data.entries()) {
@@ -90,7 +69,6 @@ const handleFormattMenu = (data: any[], menu: any[]): any[] => {
           level: item.level,
           icon: item.icon,
           visible: item.visible === '0',
-          link: item.path,
         },
         children: [],
       })
@@ -105,11 +83,24 @@ const handleFormattMenu = (data: any[], menu: any[]): any[] => {
 watch(
   () => routeInfo.value,
   (val: any[]) => {
-    console.log('routeInfo.value 更新')
-    sidebarMenu.value = handleFormattMenu(val, [])[1].children
+    const routeMetched = route.matched
+    // 匹配一级导航
+    const firstRoute = routeMetched[0].name
+    const findItem = val.find((item: any) => item.routerName === firstRoute)
+    sidebarMenu.value = handleFormattMenu(findItem.children, [])
+    if (sidebarMenu.value.length > 0) {
+      if (routeMetched.length > 1) {
+        // 匹配最后一级路由，且属性为显示
+        const lastRoute = routeMetched[routeMetched.length - 1].name
+        navKey.value = [lastRoute as string]
+      } else {
+        const matchedName = sidebarMenu.value[0].name
+        navKey.value = [matchedName]
+        router.replace({ name: matchedName })
+      }
+    }
   },
   {
-    deep: true,
     immediate: true,
   },
 )

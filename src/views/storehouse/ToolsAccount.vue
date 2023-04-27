@@ -58,7 +58,7 @@
         :is-immediately="false"
         ref="tableInstance"
       >
-        <template #slotOne="{ record }">
+        <template #status="{ record }">
           {{ record.errorStatusStr ? record.errorStatusStr : toolStatusEnum(record.status) }}
         </template>
         <template #action="{ record }">

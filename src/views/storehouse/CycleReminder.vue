@@ -55,7 +55,7 @@
         :is-immediately="false"
         ref="tableInstance"
       >
-        <template #slotOne="{ record }">
+        <template #status="{ record }">
           {{ record.errorStatusStr ? record.errorStatusStr : toolStatusEnum(record.status) }}
         </template>
         <template #action="{ record }">
@@ -88,9 +88,9 @@ import { cycleReminderColumns } from '@/enums/tableHeadEnum'
 import { actionTypeEnum } from '@/enums/commonEnum'
 import useSectionCode from '@/hooks/useSectionCode'
 import { toolStatusEnum, toolStatusOptions } from '@/enums/storehouseEnum'
-import { useAppStore } from '@/store/modules/app'
+import { useWarehouseStore } from '@/store/modules/warehouse'
 
-const appStore = useAppStore()
+const warehouseStore = useWarehouseStore()
 
 /**
  ********************************* 表格操作 ******************************************
@@ -126,7 +126,7 @@ useSectionCode((code: string) => {
   handleReacquire(1)
 })
 
-const cycleReminderNum = computed(() => appStore.cycleReminderNum)
+const cycleReminderNum = computed(() => warehouseStore.cycleReminderNum)
 
 onMounted(() => {
   if (cycleReminderNum.value > 0) {
@@ -189,7 +189,7 @@ const getToolsModel = async (value: string) => {
 const setMsgHaveRead = async () => {
   const { code, data } = await apiSetMsgHaveRead({ dataType: 'today_overCheckNum' })
   if (code === 20000) {
-    appStore.cycleReminderNum = parseInt(data)
+    warehouseStore.cycleReminderNum = parseInt(data)
   }
 }
 
@@ -265,6 +265,7 @@ const handleInspectionDone = async (record: any) => {
     display: flex;
     justify-content: flex-end;
     padding: 32px 32px 20px 32px !important;
+    background-color: #ffffff;
   }
   .custom-table-wrap {
     height: calc(100% - 306px);

@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     ASubMenu: typeof import('ant-design-vue/es')['SubMenu']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
+    ATreeSelect: typeof import('ant-design-vue/es')['TreeSelect']
     Bar: typeof import('./src/components/charts/Bar.vue')['default']
     BidSection: typeof import('./src/components/common/BidSection.vue')['default']
     FreightSpaceDetail: typeof import('./src/components/storehouse/FreightSpaceDetail.vue')['default']

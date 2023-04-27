@@ -1,5 +1,5 @@
 <template>
-  <div ref="ymTableInstance" class="ym-table-wrapper">
+  <div ref="tableInstance" class="ym-table-wrapper">
     <a-table
       :row-selection="rowSelection"
       :columns="columns"
@@ -17,14 +17,8 @@
         <template v-else-if="column.key === 'action'">
           <slot name="action" :index="index" :record="record"></slot>
         </template>
-        <template v-else-if="column.key === 'slotOne'">
-          <slot name="slotOne" :index="index" :record="record"></slot>
-        </template>
-        <template v-else-if="column.key === 'slotTwo'">
-          <slot name="slotTwo" :index="index" :record="record"></slot>
-        </template>
-        <template v-else-if="column.key === 'slotThree'">
-          <slot name="slotThree" :index="index" :record="record"></slot>
+        <template v-else>
+          <slot :name="column.key" :index="index" :record="record"></slot>
         </template>
       </template>
     </a-table>
@@ -58,7 +52,7 @@ const props = withDefaults(defineProps<Props>(), {
   preserveSelectedRowKeys: false,
 })
 
-const ymTableInstance = ref()
+const tableInstance = ref()
 
 const ymHeight = ref('')
 
@@ -87,8 +81,8 @@ onMounted(() => {
 })
 
 const setDomClientView = () => {
-  if (!ymTableInstance.value) return
-  const parentNode = ymTableInstance.value.parentNode
+  if (!tableInstance.value) return
+  const parentNode = tableInstance.value.parentNode
   const paddingTop = parseInt(getComputedStyle(parentNode)['paddingTop'].slice(0, -2))
   const paddingLeft = parseInt(getComputedStyle(parentNode)['paddingLeft'].slice(0, -2))
   const height = parentNode.clientHeight - paddingTop * 2 - 40
@@ -99,7 +93,7 @@ const setDomClientView = () => {
   }
   const emptyNode: any = document.getElementsByClassName('ant-table-placeholder')[0]
   emptyNode.style.height = ymHeight.value
-  ymTableInstance.value.style.width = parentNode.clientWidth - paddingLeft * 2 + 'px'
+  tableInstance.value.style.width = parentNode.clientWidth - paddingLeft * 2 + 'px'
 }
 
 // 是否需要分页器
@@ -113,7 +107,7 @@ const pagination = computed(() =>
         onChange: handleReacquire,
         showQuickJumper: true,
         showSizeChanger: true,
-        onShowSizeChange: (current: number, pageSize: number) => {
+        onShowSizeChange: (_current: number, pageSize: number) => {
           onChangeSize(pageSize)
         },
       }

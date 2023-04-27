@@ -898,7 +898,7 @@ export const toolsAccountColumns = [
   },
   {
     title: '状态',
-    key: 'slotOne',
+    key: 'status',
   },
   {
     title: '操作',
@@ -936,17 +936,17 @@ export const receiveRecordColumns = [
   },
   {
     title: '领用时间',
-    key: 'slotTwo',
+    key: 'receiveTime',
     width: 240,
   },
   {
     title: '归还时间',
-    key: 'slotThree',
+    key: 'returnTime',
     width: 240,
   },
   {
     title: '状态',
-    key: 'slotOne',
+    key: 'status',
   },
   {
     title: '操作',
@@ -995,7 +995,7 @@ export const cycleReminderColumns = [
   },
   {
     title: '在库状态',
-    key: 'slotOne',
+    key: 'status',
   },
   {
     title: '距离脱检',
@@ -1116,7 +1116,7 @@ export const warehouseStatusColumns = [
   },
   {
     title: '工器具状态',
-    key: 'slotOne',
+    key: 'status',
   },
 ]
 
@@ -1250,7 +1250,7 @@ export const stockWarningColumns = [
   },
   {
     title: '库存数量',
-    key: 'slotOne',
+    key: 'existNum',
   },
 ]
 

@@ -44,16 +44,16 @@
         :is-immediately="false"
         ref="tableInstance"
       >
-        <template #slotOne="{ record }">
+        <template #status="{ record }">
           {{ record.errorStatusStr ? record.errorStatusStr : toolStatusEnum(record.status) }}
         </template>
-        <template #slotTwo="{ record }">
+        <template #receiveTime="{ record }">
           <a-space>
             <span>{{ record.receiveTime }}</span>
             <a-button type="link" size="small" @click="handleCheckVideo(record.recVideoList)">查看视频</a-button>
           </a-space>
         </template>
-        <template #slotThree="{ record }">
+        <template #returnTime="{ record }">
           <a-space>
             <span>{{ record.returnTime || '--' }}</span>
             <a-button type="link" size="small" @click="handleCheckVideo(record.retVideoList)">查看视频</a-button>

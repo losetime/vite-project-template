@@ -28,7 +28,7 @@
         :isImmediately="false"
         ref="tableInstance"
       >
-        <template #slotOne="{ record }">
+        <template #existNum="{ record }">
           <a-space>
             <span :style="{ color: record.existNum <= 0 ? '#ff4d4f' : '' }">{{ record.existNum }}</span>
             <span style="background: #ff4d4f; color: #ffffff; padding: 2px 4px" v-if="record.existNum <= 0">

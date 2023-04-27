@@ -18,7 +18,7 @@
         :row-selection="false"
         ref="tableInstance"
       >
-        <template #slotOne="{ record }">
+        <template #status="{ record }">
           <a-space>
             <span>{{ record.errorStatusStr ? record.errorStatusStr : toolStatusEnum(record.status) }}</span>
             <a-button

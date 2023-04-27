@@ -55,7 +55,9 @@ const useEcharts = (initOptions: Function, series: Array<any>) => {
    * @desc 重新渲染
    */
   const resizeChart = () => {
-    chartInstance.value.resize()
+    if (chartInstance.value) {
+      chartInstance.value.resize()
+    }
   }
 
   /**

@@ -31,9 +31,6 @@
         :is-immediately="false"
         ref="tableInstance"
       >
-        <template #slotOne="{ record }">
-          <span>{{ record.modelsStr }}</span>
-        </template>
         <template #action="{ record }">
           <a-space>
             <a-button type="link" size="small" @click="handleEdit(record)">编辑</a-button>

@@ -1,56 +1,40 @@
 <template>
   <div class="app-wrapper">
-    <!-- <router-view /> -->
-    <!-- <Header /> -->
+    <Header />
     <div class="container-wrap">
-      <!-- <router-view name="sidebar" /> -->
       <Sidebar />
       <div class="main-wrapper">
-        <!-- <router-view name="breadcrumb" /> -->
         <Breadcrumb />
-        <router-view class="main-wrap" />
-        <!-- <router-view name="main" class="main-wrap" v-if="currentLevel === 3">
-          <router-view name="mainSub" class="main-sub-wrap" />
-        </router-view>
-        <router-view name="main" class="main-wrap" v-if="currentLevel === 4">
-          <router-view name="mainSub" class="main-sub-wrap">
-            <router-view name="fourLevelWrap" class="four-level-wrap" />
-          </router-view>
-        </router-view> -->
-        <!-- <Suspense>
-          <template #default>
-            <router-view class="main-wrap" /> -->
-        <!-- {{ route.path }}
-              <transition :name="route.meta.transition || 'fade'" mode="out-in">
-                <keep-alive>
-                  <component :is="Component" :key="route.name" />
-                </keep-alive>
-              </transition> -->
-        <!-- </router-view> -->
-        <!-- </template>
-          <template #fallback> Loading... </template>
-        </Suspense> -->
+        <RouterView>
+          <template #default="{ Component, route }">
+            <transition name="fade" mode="out-in" appear>
+              <keep-alive v-if="openCache" :include="getCaches">
+                <component :is="Component" :key="route.fullPath" />
+              </keep-alive>
+              <component v-else :is="Component" :key="route.fullPath" />
+            </transition>
+          </template>
+        </RouterView>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-// import { computed } from 'vue'
-// import { useRoute } from 'vue-router'
-// import Header from '@/layout/Header.vue'
+import Header from '@/layout/Header.vue'
 import Sidebar from '@/layout/Sidebar.vue'
 import Breadcrumb from '@/layout/Breadcrumb.vue'
-// import { useAppStore } from '@/store/modules/app'
+import { useAppStore } from '@/store/modules/app'
+import { useWarehouseStore } from '@/store/modules/warehouse'
+import { onMounted } from 'vue'
 
-// const route = useRoute()
+const appStore = useAppStore()
+const warehouseStore = useWarehouseStore()
 
-// const appStore = useAppStore()
-
-// const currentLevel = computed(() => route.meta.level)
-
-// if (store.state.token) {
-//   store.dispatch('GetMsgReminderNum')
-// }
+onMounted(() => {
+  if (appStore.userInfo.token) {
+    warehouseStore.GetMsgReminderNum()
+  }
+})
 </script>
 <style lang="less">
 .app-wrapper {

@@ -27,30 +27,31 @@ export const router = createRouter({
 /**
  * @desc 路由守卫
  */
-router.beforeEach((to, _from, next) => {
+router.beforeEach(async (to, _from, next) => {
   const appStore = useAppStore()
   const storeToken = appStore.userInfo.token
   const cacheAppStore = sessionStorage.getItem('appStore')
-  const cacheToken = cacheAppStore ? JSON.parse(cacheAppStore).userInfo.token : ''
+  const cacheUserInfo = cacheAppStore ? JSON.parse(cacheAppStore).userInfo : ''
   if (to.name === 'Login') {
-    if (cacheToken) {
-      appStore.userInfo.token = cacheToken
-      appStore.GetRoutersInfo()
-      appStore.GetUserInfo()
+    if (cacheUserInfo) {
+      appStore.userInfo = cacheUserInfo
+      await appStore.GetRoutersInfo()
       next()
     } else {
+      sessionStorage.removeItem('appStore')
       next()
     }
   } else {
-    if (cacheToken) {
+    if (cacheUserInfo) {
       if (storeToken) {
         next()
       } else {
-        appStore.userInfo.token = cacheToken
-        appStore.GetRoutersInfo()
-        appStore.GetUserInfo()
+        appStore.userInfo = cacheUserInfo
+        await appStore.GetRoutersInfo()
+        next({ path: to.path, query: to.query })
       }
     } else {
+      sessionStorage.removeItem('appStore')
       next({ name: 'Login' })
     }
   }

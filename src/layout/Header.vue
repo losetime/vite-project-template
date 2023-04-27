@@ -71,7 +71,7 @@ const currentNavKey = ref(route.matched[0].name)
 const isFullscreen = ref(false)
 
 // 所有导航菜单
-const headerMenu = computed<Array<any>>(() => router.getRoutes().filter((val) => val.meta.level === 1))
+const headerMenu = computed<any[]>(() => router.getRoutes().filter((val) => val.meta.level === 1))
 
 const isIncludeSystemSetting = computed<boolean>(
   () => router.getRoutes().filter((val) => val.name === 'Setting').length > 0,

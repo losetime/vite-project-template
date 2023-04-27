@@ -51,7 +51,7 @@
 import { reactive, ref } from 'vue'
 import YmTable from '@/components/common/YmTable.vue'
 import { apiGetToolTypeList } from '@/service/api/storehouse'
-import { stockWarningColumns } from '@/enums/tableHeadEnum'
+import { stockWarningColumns } from '@/columns/storehouse'
 import useSectionCode from '@/hooks/useSectionCode'
 import ToolsRecord from '@/components/storehouse/ToolsRecord.vue'
 

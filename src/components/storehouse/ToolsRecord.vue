@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref, nextTick, reactive } from 'vue'
-import { checkToolsRecordColumns } from '@/enums/tableHeadEnum'
+import { checkToolsRecordColumns } from '@/columns/storehouse'
 import { apiGetToolDetailRecord } from '@/service/api/storehouse'
 import YmTable from '@/components/common/YmTable.vue'
 

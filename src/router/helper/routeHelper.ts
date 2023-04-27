@@ -53,18 +53,34 @@ const formattRouter = (data: any[], routerArr: any[]): any[] => {
   for (const [index, item] of data.entries()) {
     const path = item.path.includes('http') ? '/' : item.path
     const component = item.level === 1 ? Layout : modules[`../../${item.component}.vue`]
-    routerArr.push({
-      path: path,
-      name: item.routerName,
-      component: component,
-      meta: {
-        title: item.menuName,
-        level: item.level,
-        icon: item.icon,
-        visible: item.visible === '0',
-      },
-      children: [],
-    })
+    if (item.routerName === 'UserCenter') {
+      routerArr.push({
+        path: path,
+        name: item.routerName,
+        component: modules[`../../${item.component}.vue`],
+        meta: {
+          title: item.menuName,
+          level: item.level,
+          icon: item.icon,
+          visible: item.visible === '0',
+        },
+        children: [],
+      })
+    } else {
+      routerArr.push({
+        path: path,
+        name: item.routerName,
+        component: component,
+        meta: {
+          title: item.menuName,
+          level: item.level,
+          icon: item.icon,
+          visible: item.visible === '0',
+        },
+        children: [],
+      })
+    }
+
     if (item.children.length > 0) {
       formattRouter(item.children, routerArr[index].children)
     }

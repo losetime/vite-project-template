@@ -49,7 +49,7 @@
 import { reactive, ref } from 'vue'
 import YmTable from '@/components/common/YmTable.vue'
 import { apiGetVideoCollectRecord } from '@/service/api/storehouse'
-import { videosCollectionColumns } from '@/enums/tableHeadEnum'
+import { videosCollectionColumns } from '@/columns/storehouse'
 import useSectionCode from '@/hooks/useSectionCode'
 import VideoPlayer from '@/components/storehouse/VideoPlayer.vue'
 import { message } from 'ant-design-vue'

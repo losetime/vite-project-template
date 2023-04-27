@@ -65,11 +65,14 @@ export const useAppStore = defineStore({
           createMessage.warn('用户没有可以查看的页面')
           return
         }
-        // for (const item of data) {
-
-        // }
-        const routerModule = promoteRouteLevel(data[1])
-        router.addRoute(routerModule)
+        const routes = ['Storehouse', 'Setting', 'UserCenter', 'Notice']
+        for (const item of data) {
+          if (routes.includes(item.routerName)) {
+            const routerModule = promoteRouteLevel(item)
+            router.addRoute(routerModule)
+          }
+        }
+        console.log(999, router.getRoutes())
         const firstLevelRoute = router.getRoutes().filter((val) => val.meta.level === 1)
         const routerName = firstLevelRoute[0].name
         router.replace({ name: routerName })

@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import YmTable from '@/components/common/YmTable.vue'
-import { LeakReceiveToolsColumns } from '@/enums/tableHeadEnum'
+import { LeakReceiveToolsColumns } from '@/columns/storehouse'
 
 const props = defineProps<{
   leakReceiveData: any[]

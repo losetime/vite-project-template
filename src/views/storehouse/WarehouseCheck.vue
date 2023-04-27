@@ -53,7 +53,7 @@
 import { computed, reactive, ref } from 'vue'
 import YmTable from '@/components/common/YmTable.vue'
 import { apiGetToolTypeList, apiPutInWarehousing } from '@/service/api/storehouse'
-import { warehouseCheckColumns } from '@/enums/tableHeadEnum'
+import { warehouseCheckColumns } from '@/columns/storehouse'
 import useSectionCode from '@/hooks/useSectionCode'
 import ToolsRecord from '@/components/storehouse/ToolsRecord.vue'
 import { message } from 'ant-design-vue'

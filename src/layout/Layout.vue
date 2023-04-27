@@ -3,15 +3,16 @@
     <Header />
     <div class="container-wrap">
       <Sidebar />
+      <router-view name="sidebar" />
       <div class="main-wrapper">
         <Breadcrumb />
-        <RouterView>
+        <router-view>
           <template #default="{ Component, route }">
             <transition name="fade" mode="out-in" appear>
               <component :is="Component" :key="route.fullPath" class="main-content" />
             </transition>
           </template>
-        </RouterView>
+        </router-view>
       </div>
     </div>
   </div>
@@ -33,7 +34,7 @@ onMounted(() => {
   }
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .app-wrapper {
   background-color: #f0f2f5;
   .container-wrap {

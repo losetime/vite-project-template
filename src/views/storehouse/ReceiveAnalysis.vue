@@ -54,7 +54,7 @@
 import { onMounted, reactive, ref, computed } from 'vue'
 import YmTable from '@/components/common/YmTable.vue'
 import { apiGetToolTypeList, apiGetAnalysisStats } from '@/service/api/storehouse'
-import { receiveAnalysisColumns } from '@/enums/tableHeadEnum'
+import { receiveAnalysisColumns } from '@/columns/storehouse'
 import useSectionCode from '@/hooks/useSectionCode'
 import LeakReceiveTools from '@/components/storehouse/LeakReceiveTools.vue'
 import { dateUtil } from '@/utils/dateUtil'

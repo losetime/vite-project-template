@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { ref, reactive, nextTick } from 'vue'
 import YmTable from '@/components/common/YmTable.vue'
-import { warehouseStatusColumns } from '@/enums/tableHeadEnum'
+import { warehouseStatusColumns } from '@/columns/storehouse'
 import { apiGetShippingSpaceDetailRecord } from '@/service/api/storehouse'
 import { toolStatusEnum } from '@/enums/storehouseEnum'
 import { message } from 'ant-design-vue'

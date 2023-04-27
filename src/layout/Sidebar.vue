@@ -80,25 +80,34 @@ const handleFormattMenu = (data: any[], menu: any[]): any[] => {
   return menu
 }
 
-watch(
-  () => routeInfo.value,
-  (val: any[]) => {
-    const routeMetched = route.matched
-    // 匹配一级导航
-    const firstRoute = routeMetched[0].name
-    const findItem = val.find((item: any) => item.routerName === firstRoute)
-    sidebarMenu.value = handleFormattMenu(findItem.children, [])
-    if (sidebarMenu.value.length > 0) {
-      if (routeMetched.length > 1) {
-        // 匹配最后一级路由，且属性为显示
-        const lastRoute = routeMetched[routeMetched.length - 1].name
-        navKey.value = [lastRoute as string]
-      } else {
-        const matchedName = sidebarMenu.value[0].name
-        navKey.value = [matchedName]
-        router.replace({ name: matchedName })
-      }
+/**
+ * @desc 菜单导航
+ */
+const handleNavigation = (matched: any[]) => {
+  // 匹配一级导航
+  const firstRoute = matched[0].name
+  // 在routerInfo中找到相关对象
+  const findItem = routeInfo.value.find((item: any) => item.routerName === firstRoute)
+  // 取出该对象的各级children作为菜单
+  sidebarMenu.value = handleFormattMenu(findItem.children, [])
+  if (sidebarMenu.value.length > 0) {
+    if (matched.length > 1) {
+      // 由于路由被打平，只有二级路由，所以只会匹配到两个
+      // 匹配最后一级路由
+      const lastRoute = matched[matched.length - 1].name
+      navKey.value = [lastRoute as string]
+    } else {
+      const matchedName = sidebarMenu.value[0].name
+      navKey.value = [matchedName]
+      router.replace({ name: matchedName })
     }
+  }
+}
+
+watch(
+  () => route.matched,
+  (val: any[]) => {
+    handleNavigation(val)
   },
   {
     immediate: true,

@@ -3,7 +3,7 @@
     <div class="header-left-wrap">
       <div class="logo-wrap">
         <img src="../assets/images/common/logo.png" alt="logo" />
-        <div class="logo-text">基建现场感知系统</div>
+        <div class="logo-text">智能工器具室管理系统</div>
       </div>
       <div class="menu-wrap">
         <template v-for="item in headerMenu">
@@ -56,13 +56,11 @@
 import { ref, computed, createVNode } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Iconfont from '@/components/common/Iconfont.vue'
-// import screenfull from 'screenfull'
-// import store from '@/store'
+import screenfull from 'screenfull'
 import { useAppStore } from '@/store/modules/app'
 import { apiSignOut } from '@/service/api/login'
 import { Modal } from 'ant-design-vue'
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
-// BellOutlined
 
 const route = useRoute()
 const router = useRouter()
@@ -92,8 +90,8 @@ const handleSelectKeys = (menuName: string) => {
   currentNavKey.value = menuName
   const findItem = headerMenu.value.find((val) => val.name === menuName)
   // 有外链，直接跳转
-  if (findItem.meta.link) {
-    window.open(findItem.meta.link)
+  if (findItem.path.includes('http')) {
+    window.open(findItem.path)
   } else {
     router.push({ name: menuName })
   }
@@ -103,10 +101,10 @@ const handleSelectKeys = (menuName: string) => {
  * @desc 全屏切换
  */
 const toggleFullscreen = () => {
-  // if (screenfull.isEnabled) {
-  //   screenfull.toggle()
-  //   isFullscreen.value = !screenfull.isFullscreen
-  // }
+  if (screenfull.isEnabled) {
+    screenfull.toggle()
+    isFullscreen.value = !screenfull.isFullscreen
+  }
 }
 
 /**

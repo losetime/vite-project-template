@@ -1,38 +1,18 @@
-import type { CreateAxiosOptions } from './types'
-import { transform } from './transform'
-import { deepMerge } from '@/utils/base'
-import { initAxios } from './axios'
-import { ContentTypeEnum } from '@/enums/httpEnum'
-import { VITE_API_DOMAIN } from '@/enums/envEnum'
-import { Prefix } from '@/enums/httpEnum'
+import axios from 'axios'
+import type { AxiosInstance } from 'axios'
+import { setupInterceptors } from './setupInterceptors'
 
-function createAxios(opt?: Partial<CreateAxiosOptions>) {
-  return new initAxios(
-    deepMerge(
-      {
-        timeout: 10 * 1000,
-        // 基础接口地址
-        baseURL: VITE_API_DOMAIN,
-        // 接口可能会有通用的地址部分，可以统一抽取出来
-        prefixUrl: Prefix,
-        headers: { 'Content-Type': ContentTypeEnum.JSON },
-        // 数据处理方式
-        transform: transform,
-        // 配置项，下面的选项都可以在独立的接口请求中覆盖
-        requestOptions: {
-          // 默认将prefix 添加到url
-          joinPrefix: true,
-          // 需要对返回数据进行处理
-          isTransformRequestResult: false,
-          // 消息提示类型
-          errorMessageMode: 'none',
-          // 其他接口地址
-          apiUrl: '',
-        },
-      },
-      opt || {},
-    ),
-  )
+// 创建 axios 请求实例
+export const serviceAxios: AxiosInstance = axios.create({
+  baseURL: '', // 基础请求地址
+  timeout: 10000, // 请求超时设置
+  withCredentials: false, // 跨域请求是否需要携带 cookie
+})
+
+setupInterceptors(serviceAxios)
+
+export const $http = {
+  request: (config: any) => {
+    return serviceAxios(config)
+  },
 }
-
-export const $http = createAxios()

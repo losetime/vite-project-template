@@ -5,26 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
+import useCache from '@/hooks/useCache'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
 dayjs.locale('zh-cn')
-import { useAppStore } from '@/store/modules/app'
 
 const locale = ref(zhCN)
 
-const appStore = useAppStore()
-
-watch(
-  () => appStore.$state,
-  (val: any) => {
-    sessionStorage.setItem('appStore', JSON.stringify(val))
-  },
-  {
-    deep: true,
-  },
-)
+useCache()
 </script>
 
 <style lang="less">

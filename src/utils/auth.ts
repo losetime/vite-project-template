@@ -17,8 +17,8 @@ export function getUserInfo(): { sysUserId: number; sysUsername: string } {
  */
 export function getToken(): string {
   const appStore = useAppStoreWithOut()
-  const userInfo = appStore.userInfo
-  return userInfo.token
+  const token = appStore.token
+  return token
 }
 
 /**

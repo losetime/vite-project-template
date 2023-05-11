@@ -1,5 +1,5 @@
 <template>
-  <div class="global-handle-wrapper">
+  <div class="bid-section-wrapper">
     <!-- <a-button @click="getSceneData">
       <template #icon>
         <Iconfont type="icon-xiazai" />
@@ -120,7 +120,7 @@ const handleCancel = () => {
 </script>
 
 <style lang="less" scoped>
-.global-handle-wrapper {
+.bid-section-wrapper {
   display: flex;
   ::v-deep(.ant-btn) {
     margin-left: 14px;

@@ -146,7 +146,7 @@ const onLogout = () => {
       const { code } = await apiSignOut()
       if (code === 20000) {
         sessionStorage.removeItem('ymToken')
-        appStore.userInfo.token = ''
+        appStore.token = ''
         router.replace({ name: 'Login' })
       }
     },

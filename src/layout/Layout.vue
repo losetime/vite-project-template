@@ -29,7 +29,7 @@ const appStore = useAppStore()
 const warehouseStore = useWarehouseStore()
 
 onMounted(() => {
-  if (appStore.userInfo.token) {
+  if (appStore.token) {
     warehouseStore.GetMsgReminderNum()
   }
 })

@@ -18,6 +18,7 @@ export interface IencryptKey {
 }
 
 interface AppState {
+  token: string
   // 用户相关信息
   userInfo: any
   // 项目标段
@@ -34,9 +35,8 @@ interface AppState {
 export const useAppStore = defineStore({
   id: 'app',
   state: (): AppState => ({
-    userInfo: {
-      token: '',
-    },
+    token: '',
+    userInfo: {},
     projectSection: {
       bidName: '',
       sectionCode: '',
@@ -58,24 +58,24 @@ export const useAppStore = defineStore({
     async GetRoutersInfo(): Promise<void> {
       const { code, data } = await apiGetRoutersInfo()
       if (code === ResultEnum.SUCCESS) {
-        const { createMessage } = useMessage()
         this.routeInfo = data
+        // 用户没有可以查看的页面
         if (data.length <= 0) {
-          // 用户没有可以查看的页面
+          this.token = ''
+          const { createMessage } = useMessage()
           createMessage.warn('用户没有可以查看的页面')
-          return
-        }
-        const routes = ['Storehouse', 'Setting', 'UserCenter', 'Notice']
-        for (const item of data) {
-          if (routes.includes(item.routerName)) {
-            const routerModule = promoteRouteLevel(item)
-            router.addRoute(routerModule)
+        } else {
+          const routes = ['Storehouse', 'Setting', 'UserCenter', 'Notice']
+          for (const item of data) {
+            if (routes.includes(item.routerName)) {
+              const routerModule = promoteRouteLevel(item)
+              router.addRoute(routerModule)
+            }
           }
+          const firstLevelRoute = router.getRoutes().filter((val) => val.meta.level === 1)
+          const routerName = firstLevelRoute[0].name
+          router.replace({ name: routerName })
         }
-        console.log(999, router.getRoutes())
-        const firstLevelRoute = router.getRoutes().filter((val) => val.meta.level === 1)
-        const routerName = firstLevelRoute[0].name
-        router.replace({ name: routerName })
       }
     },
     /**

@@ -72,18 +72,12 @@ import { UserOutlined, UnlockOutlined } from '@ant-design/icons-vue'
 import { loginRules } from '@/validator/login'
 import { apiGetCodeImage, apiSubmitLogin } from '@/service/api/login'
 import { apiGetPublicKey } from '@/service/api/common'
-// import { useRouter } from 'vue-router'
 import { useAppStore } from '@/store/modules/app'
 import UpdatePassword from '@/components/userCenter/UpdatePassword.vue'
-// import useMessage from '@/hooks/useMessage'
 
 const appStore = useAppStore()
 
 const labelCol = { span: 0 }
-
-// const router = useRouter()
-
-// const appStore = useAppStore()
 
 const loginInfo = reactive({
   userName: '',
@@ -118,17 +112,12 @@ const getCode = async () => {
 const getPublicKey = async () => {
   const { code, data } = await apiGetPublicKey()
   if (code === 20000) {
-    // store.commit('SET_SERVE_PUBLIC_KEY', data.publicKey)
-    // store.commit('SET_ENCRYPT_ENABLE', data.encryptEnable)
     appStore.servePublicKey = data.publicKey
     appStore.encryptEnable = data.encryptEnable
-    // sessionStorage.setItem('servePublicKey', data.publicKey)
-    // sessionStorage.setItem('encryptEnable', data.encryptEnable)
   }
 }
 
 const loginSubmit = () => {
-  // const { createMessage } = useMessage()
   validate().then(async () => {
     loginLoading.value = true
     const { code, data } = await apiSubmitLogin({
@@ -139,21 +128,7 @@ const loginSubmit = () => {
     })
     loginLoading.value = false
     if (code === 20000) {
-      // store.commit('SET_TOKEN', data.token)
-      appStore.userInfo.token = data.token
-      await appStore.GetUserInfo()
-      await appStore.GetRoutersInfo()
-
-      // const hasAuth = await getRouters()
-      // if (hasAuth) {
-      //   const firstLevelRoute = router.getRoutes().filter((val) => val.meta.level === 1)
-      //   const routerName = firstLevelRoute[0].name
-      //   router.replace({ name: routerName })
-      // } else {
-      //   createMessage.warning('该账户没有可用权限，请联系管理员或更换账户')
-      //   store.commit('SET_TOKEN', '')
-      //   getCode()
-      // }
+      appStore.token = data.token
     } else if (code === 40010 || code === 40011) {
       isForceUpdatePassword.value = true
     } else {

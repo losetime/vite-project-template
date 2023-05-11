@@ -11,7 +11,6 @@ const modules = Object.assign(views, components)
 // 路由等级提升
 export function promoteRouteLevel(routeModule: any) {
   const routerInfo: any = formattRouter([routeModule], [])[0]
-  // Use vue-router to splice menus
   // 使用vue-router拼接菜单
   // createRouter 创建一个可以被 Vue 应用程序使用的路由实例
   let router: Router | null = createRouter({

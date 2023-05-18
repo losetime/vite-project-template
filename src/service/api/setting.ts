@@ -363,7 +363,7 @@ export function apiExportLogs() {
 /**
  * @desc 获取用户信息
  */
-export function apiGetUserInfo() {
+export function apiGetUserInfo(): Promise<any> {
   return $http.request({
     url: Api.getUserInfo,
     method: 'GET',
@@ -384,7 +384,7 @@ export function apiUpdatePassword(params: IUpdatePassword) {
 /**
  * @desc 注销用户
  */
-export function apiKillUser(params: { password: string }) {
+export function apiKillUser(params: { password: string }): Promise<any> {
   return $http.request({
     url: Api.killUser,
     method: 'POST',

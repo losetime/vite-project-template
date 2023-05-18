@@ -77,7 +77,7 @@ export function apiGetProjectSection(params?: { bidName: string }) {
 /**
  * @desc 获取RSA公钥和随机串
  */
-export function apiGetPublicKey() {
+export function apiGetPublicKey(): Promise<any> {
   return $http.request({
     url: Api.getPublicKey,
     method: 'GET',

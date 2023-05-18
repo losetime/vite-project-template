@@ -5,8 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import useCache from '@/hooks/useCache'
+import { getPublicKey, generateClientKey } from '@/utils/encipherUtil'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import dayjs from 'dayjs'
 import 'dayjs/locale/zh-cn'
@@ -15,6 +16,11 @@ dayjs.locale('zh-cn')
 const locale = ref(zhCN)
 
 useCache()
+
+onBeforeMount(() => {
+  generateClientKey()
+  getPublicKey()
+})
 </script>
 
 <style lang="less">

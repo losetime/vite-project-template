@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
-import { setupInterceptors } from './setupInterceptors'
+import { setupInterceptors } from './interceptor'
 
 // 创建 axios 请求实例
 export const serviceAxios: AxiosInstance = axios.create({

@@ -79,7 +79,7 @@ export function apiModifyUserStatus(params: IModifyUserStatus): Promise<any> {
   return $http.request({
     url: Api.modifyUserStatus,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -101,7 +101,7 @@ export function apiAddUser(params: IAddUser): Promise<any> {
   return $http.request({
     url: Api.handleUserDetail,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -112,7 +112,7 @@ export function apiUpdateUser(params: IAddUser): Promise<any> {
   return $http.request({
     url: Api.updateUser,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -129,11 +129,11 @@ export function apiDeleteUser(params: { userId: number }): Promise<any> {
 /**
  * @desc 修改密码
  */
-export function apiModifyPassword(params: IModifyPassword) {
+export function apiModifyPassword(params: IModifyPassword): Promise<any> {
   return $http.request({
     url: Api.modifyPassword,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -142,7 +142,7 @@ export function apiModifyPassword(params: IModifyPassword) {
 /**
  * @desc 获取角色列表
  */
-export function apiGetRoleList(params: IGetRoleList) {
+export function apiGetRoleList(params: IGetRoleList): Promise<any> {
   return $http.request({
     url: Api.getRoleList,
     method: 'GET',
@@ -153,7 +153,7 @@ export function apiGetRoleList(params: IGetRoleList) {
 /**
  * @desc 删除角色
  */
-export function apiDeleteRole(params: { roleId: number }) {
+export function apiDeleteRole(params: { roleId: number }): Promise<any> {
   return $http.request({
     url: Api.getRoleDetail + `/${params.roleId}`,
     method: 'POST',
@@ -167,7 +167,7 @@ export function apiModifyRoleStatus(params: IModifyRoleStatus): Promise<any> {
   return $http.request({
     url: Api.modifyRoleStatus,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -209,7 +209,7 @@ export function apiAddRole(params: IAddRole): Promise<any> {
   return $http.request({
     url: Api.getRoleDetail,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -220,7 +220,7 @@ export function apiUpdateRole(params: IAddRole): Promise<any> {
   return $http.request({
     url: Api.updateRoleDetail,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -264,7 +264,7 @@ export function apiAddMenuDetail(params: IAddMenuDetail): Promise<any> {
   return $http.request({
     url: Api.getMenuDetail,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -275,7 +275,7 @@ export function apiUpdateMenuDetail(params: IAddMenuDetail): Promise<any> {
   return $http.request({
     url: Api.updateMenuDetail,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -295,7 +295,7 @@ export function apiGetDeptList(params: IGetDeptList) {
 /**
  * @desc 删除部门
  */
-export function apiDeleteDept(params: { deptId: number }) {
+export function apiDeleteDept(params: { deptId: number }): Promise<any> {
   return $http.request({
     url: Api.delDept + `/${params.deptId}`,
     method: 'POST',
@@ -305,7 +305,7 @@ export function apiDeleteDept(params: { deptId: number }) {
 /**
  * @desc 获取部门详情
  */
-export function apiGetDeptDetail(params: { deptId: number }) {
+export function apiGetDeptDetail(params: { deptId: number }): Promise<any> {
   return $http.request({
     url: Api.getDeptDetail + `/${params.deptId}`,
     method: 'GET',
@@ -315,22 +315,22 @@ export function apiGetDeptDetail(params: { deptId: number }) {
 /**
  * @desc 新增部门
  */
-export function apiAddDept(params: IAddDept) {
+export function apiAddDept(params: IAddDept): Promise<any> {
   return $http.request({
     url: Api.addDateDept,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
 /**
  * @desc 更新部门
  */
-export function apiUpdateDept(params: IAddDept) {
+export function apiUpdateDept(params: IAddDept): Promise<any> {
   return $http.request({
     url: Api.updateDept,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -339,7 +339,7 @@ export function apiUpdateDept(params: IAddDept) {
 /**
  * @desc 获取日志列表
  */
-export function apiGetLogsList(params: IGetLogsList) {
+export function apiGetLogsList(params: IGetLogsList): Promise<any> {
   return $http.request({
     url: Api.getLogsList,
     method: 'GET',
@@ -350,7 +350,7 @@ export function apiGetLogsList(params: IGetLogsList) {
 /**
  * @desc 导出日志
  */
-export function apiExportLogs() {
+export function apiExportLogs(): Promise<any> {
   return $http.request({
     url: Api.exportLogs,
     method: 'GET',
@@ -373,11 +373,11 @@ export function apiGetUserInfo(): Promise<any> {
 /**
  * @desc 获取用户信息
  */
-export function apiUpdatePassword(params: IUpdatePassword) {
+export function apiUpdatePassword(params: IUpdatePassword): Promise<any> {
   return $http.request({
     url: Api.updatePassword,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -388,6 +388,6 @@ export function apiKillUser(params: { password: string }): Promise<any> {
   return $http.request({
     url: Api.killUser,
     method: 'POST',
-    params,
+    data: params,
   })
 }

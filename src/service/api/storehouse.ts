@@ -17,31 +17,9 @@ import {
 // -------------------------------------- 首页 -----------------------------------------------
 
 /**
- * @desc 工器具归还率
- */
-export function apiGetToolReturnRate(params: { bidNo: string }) {
-  return $http.request({
-    url: '/person/cea/tool/visualization/toolSendBackSituation',
-    method: 'GET',
-    params,
-  })
-}
-
-/**
- * @desc 已归还工器具占比
- */
-export function apiGetToolReturnProportion(params: { bidNo: string }) {
-  return $http.request({
-    url: '/person/cea/tool/visualization/notUseToolSituation',
-    method: 'GET',
-    params,
-  })
-}
-
-/**
  * @desc 获取仪表盘数据
  */
-export function apiGetDashboardData(params: IGetDashboardData) {
+export function apiGetDashboardData(params: IGetDashboardData): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/getDashboard',
     method: 'GET',
@@ -50,31 +28,23 @@ export function apiGetDashboardData(params: IGetDashboardData) {
 }
 
 /**
- * @desc 工器具状态占比
+ * @desc 工器具饼状图统计
  */
-export function apiGetToolStatusRate(params: { bidNo: string }) {
+export function apiGetToolCount(params: { bidNo: string; dataType: string }): Promise<any> {
   return $http.request({
-    url: '/person/cea/tool/visualization/toolStatusSituation',
+    url: '/person/cea/tool/visualization/pie',
     method: 'GET',
     params,
-  })
-}
-
-/**
- * @desc 脱检工器具占比
- */
-export function apiGetToolNoCheckCompared(params: { bidNo: string }) {
-  return $http.request({
-    url: '/person/cea/tool/visualization/unCheckedToolSituation',
-    method: 'GET',
-    params,
+    headers: {
+      ignoreCancelToken: true, // 忽略关闭重复请求
+    },
   })
 }
 
 /**
  * @desc 待办事项/已处理事项查询
  */
-export function apiGetToolTodoRecord(params: { status: string }) {
+export function apiGetToolTodoRecord(params: { status: string }): Promise<any> {
   return $http.request({
     url: '/person/cea/tooltodo/selectAll',
     method: 'GET',
@@ -88,7 +58,7 @@ export function apiGetToolTodoRecord(params: { status: string }) {
 /**
  * @desc 不再提醒
  */
-export function apiHandleNotRemind() {
+export function apiHandleNotRemind(): Promise<any> {
   return $http.request({
     url: '/person/cea/tooltodo/noMoreNotice',
     method: 'POST',
@@ -98,7 +68,7 @@ export function apiHandleNotRemind() {
 /**
  * @desc 处理待办事项
  */
-export function apiHandleTodoDone(params: { id: string }) {
+export function apiHandleTodoDone(params: { id: string }): Promise<any> {
   return $http.request({
     url: '/person/cea/tooltodo/deal',
     method: 'POST',
@@ -111,7 +81,7 @@ export function apiHandleTodoDone(params: { id: string }) {
 /**
  * @description: 获取标签列表
  */
-export function apiGetTagsList(params: IGetTagsList) {
+export function apiGetTagsList(params: IGetTagsList): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/selectPage',
     method: 'GET',
@@ -122,18 +92,18 @@ export function apiGetTagsList(params: IGetTagsList) {
 /**
  * @description: 新增/更新标签
  */
-export function apiSaveTag(params: ISaveTag) {
+export function apiSaveTag(params: ISaveTag): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/saveTool',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
 /**
  * @desc 生成FRID
  */
-export function apiGenerateFRID(params: IGenerateFRID) {
+export function apiGenerateFRID(params: IGenerateFRID): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/genRfidCode',
     method: 'GET',
@@ -144,11 +114,11 @@ export function apiGenerateFRID(params: IGenerateFRID) {
 /**
  * @desc: 删除标签
  */
-export function apiDeleteTags(params: { ids: string[] }) {
+export function apiDeleteTags(params: { ids: string[] }): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/delete',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -158,7 +128,7 @@ export function apiDeleteTags(params: { ids: string[] }) {
  * @desc 领还记录列表
  */
 
-export function apiGetToolsReceiveList(params: IGetToolsReceiveList) {
+export function apiGetToolsReceiveList(params: IGetToolsReceiveList): Promise<any> {
   return $http.request({
     url: '/person/cea/toolrecipient/selectPage',
     method: 'GET',
@@ -169,7 +139,7 @@ export function apiGetToolsReceiveList(params: IGetToolsReceiveList) {
 /**
  * @desc 获取工器具详情
  */
-export function apiGetToolDetail(params: { id: string }) {
+export function apiGetToolDetail(params: { id: string }): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/getDetail',
     method: 'GET',
@@ -182,11 +152,11 @@ export function apiGetToolDetail(params: { id: string }) {
 /**
  * @desc 更新工器具详情
  */
-export function apiUpdateToolDetail(params: any) {
+export function apiUpdateToolDetail(params: any): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/update',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -195,7 +165,7 @@ export function apiUpdateToolDetail(params: any) {
 /**
  * @description: 仓库管理-获取仓库列表
  */
-export function apiGetRepositoryList(params: IGetRepositoryList) {
+export function apiGetRepositoryList(params: IGetRepositoryList): Promise<any> {
   return $http.request({
     url: '/person/cea/storehouse/selectPage',
     method: 'GET',
@@ -206,29 +176,29 @@ export function apiGetRepositoryList(params: IGetRepositoryList) {
 /**
  * @description: 仓库管理-新增/更新仓库
  */
-export function apiSaveRepository(params: ISaveRepository) {
+export function apiSaveRepository(params: ISaveRepository): Promise<any> {
   return $http.request({
     url: '/person/cea/storehouse/save',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
 /**
  * @description: 仓库管理-删除仓库
  */
-export function apiDeleteRepository(params: { ids: string[] }) {
+export function apiDeleteRepository(params: { ids: string[] }): Promise<any> {
   return $http.request({
     url: '/person/cea/storehouse/delete',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
 /**
  * @description: 仓位管理-获取所有仓库
  */
-export function apiGetRepositoryAll() {
+export function apiGetRepositoryAll(): Promise<any> {
   return $http.request({
     url: '/person/cea/storehouse/selectAll',
     method: 'GET',
@@ -238,7 +208,7 @@ export function apiGetRepositoryAll() {
 /**
  * @description: 仓位管理-获取仓位列表
  */
-export function apiGetFreightSpaceList(params: { name: string; houseId?: string; bidCode?: string }) {
+export function apiGetFreightSpaceList(params: { name: string; houseId?: string; bidCode?: string }): Promise<any> {
   return $http.request({
     url: '/person/cea/storeposition/selectPage',
     method: 'GET',
@@ -249,7 +219,7 @@ export function apiGetFreightSpaceList(params: { name: string; houseId?: string;
 /**
  * @desc 仓位管理-获取工器具树结构
  */
-export function apiGetToolsTree() {
+export function apiGetToolsTree(): Promise<any> {
   return $http.request({
     url: '/person/cea/tooltype/getTree',
     method: 'GET',
@@ -259,22 +229,22 @@ export function apiGetToolsTree() {
 /**
  * @description: 仓位管理-新增/更新仓位
  */
-export function apiSaveFreightSpace(params: ISaveFreightSpace) {
+export function apiSaveFreightSpace(params: ISaveFreightSpace): Promise<any> {
   return $http.request({
     url: '/person/cea/storeposition/save',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
 /**
  * @description: 仓位管理-删除仓位
  */
-export function apiDeleteFreightSpace(params: { ids: string[] }) {
+export function apiDeleteFreightSpace(params: { ids: string[] }): Promise<any> {
   return $http.request({
     url: '/person/cea/storeposition/delete',
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -282,7 +252,7 @@ export function apiDeleteFreightSpace(params: { ids: string[] }) {
  * @description: 工器具名称/型号-获取标签列表
  * @param other 工器具名称/型号toolType 库存预警stockWarn 盘点入库清单stockList 应领工器具列表shouldTakeList
  */
-export function apiGetToolTypeList(params: IGetTagsList) {
+export function apiGetToolTypeList(params: IGetTagsList): Promise<any> {
   return $http.request({
     url: '/person/cea/tooltype/selectPage',
     method: 'GET',
@@ -295,7 +265,7 @@ export function apiGetToolTypeList(params: IGetTagsList) {
 /**
  * @description: 获取仓位列表
  */
-export function apiGetToolShippingSpaceRecord(params: IGetToolShippingSpaceRecord) {
+export function apiGetToolShippingSpaceRecord(params: IGetToolShippingSpaceRecord): Promise<any> {
   return $http.request({
     url: '/person/cea/storeposition/selectPage',
     method: 'GET',
@@ -306,7 +276,7 @@ export function apiGetToolShippingSpaceRecord(params: IGetToolShippingSpaceRecor
 /**
  * @description: 获取仓位下的工器具列表
  */
-export function apiGetShippingSpaceDetailRecord(params: { houseId: string }) {
+export function apiGetShippingSpaceDetailRecord(params: { houseId: string }): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/getListByPositionId',
     method: 'GET',
@@ -319,7 +289,7 @@ export function apiGetShippingSpaceDetailRecord(params: { houseId: string }) {
 /**
  * @description: 获取视频分页
  */
-export function apiGetVideoCollectRecord(params: IGetVideoCollectRecord) {
+export function apiGetVideoCollectRecord(params: IGetVideoCollectRecord): Promise<any> {
   return $http.request({
     url: '/person/video/selectPage',
     method: 'GET',
@@ -332,7 +302,7 @@ export function apiGetVideoCollectRecord(params: IGetVideoCollectRecord) {
 /**
  * @description: 获取工器具列表
  */
-export function apiGetToolDetailRecord(params: IGetToolDetailRecord) {
+export function apiGetToolDetailRecord(params: IGetToolDetailRecord): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/getListByDict',
     method: 'GET',
@@ -343,7 +313,7 @@ export function apiGetToolDetailRecord(params: IGetToolDetailRecord) {
 /**
  * @description: 一键入库
  */
-export function apiPutInWarehousing() {
+export function apiPutInWarehousing(): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/stock',
     method: 'GET',
@@ -353,14 +323,12 @@ export function apiPutInWarehousing() {
 /**
  * @desc 工器具清单上传
  */
-export function apiUploadToolManifest(params: { file: File; toolTag: string }) {
-  return $http.uploadFiles(
-    {
-      url: '/person/cea/tool/importData',
-      method: 'POST',
-    },
-    params,
-  )
+export function apiUploadToolManifest(params: { file: File; toolTag: string }): Promise<any> {
+  return $http.uploadFiles({
+    url: '/person/cea/tool/importData',
+    method: 'POST',
+    data: params,
+  })
 }
 
 // --------------------------------------- 重点工器具领用分析 --------------------------------------------------
@@ -368,7 +336,7 @@ export function apiUploadToolManifest(params: { file: File; toolTag: string }) {
 /**
  * @description: 获取分析数据
  */
-export function apiGetAnalysisStats(params?: { day: string }) {
+export function apiGetAnalysisStats(params?: { day: string }): Promise<any> {
   return $http.request({
     url: '/person/cea/tool/getAnalysis',
     method: 'GET',

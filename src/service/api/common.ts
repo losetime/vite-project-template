@@ -28,7 +28,7 @@ export function apiGetRoutersInfo(): Promise<any> {
 /**
  * @description: 获取后端字典
  */
-export function apiGetDicts(params: { types: string }) {
+export function apiGetDicts(params: { types: string }): Promise<any> {
   return $http.request({
     url: Api.getDicts,
     method: 'GET',
@@ -42,7 +42,7 @@ export function apiGetDicts(params: { types: string }) {
 /**
  * @description: 获取后端联级字典
  */
-export function apiGetDictChildren(params: { type: string; value: string }) {
+export function apiGetDictChildren(params: { type: string; value: string }): Promise<any> {
   return $http.request({
     url: Api.getDictChildren,
     method: 'GET',
@@ -56,7 +56,7 @@ export function apiGetDictChildren(params: { type: string; value: string }) {
 /**
  * @description: 获取用户管理字典
  */
-export function apiGetUserDicts(params: { typeKey: string }) {
+export function apiGetUserDicts(params: { typeKey: string }): Promise<any> {
   return $http.request({
     url: Api.getUserDicts + `/${params.typeKey}`,
     method: 'GET',
@@ -66,7 +66,7 @@ export function apiGetUserDicts(params: { typeKey: string }) {
 /**
  * @description: 获取所有标段
  */
-export function apiGetProjectSection(params?: { bidName: string }) {
+export function apiGetProjectSection(params?: { bidName: string }): Promise<any> {
   return $http.request({
     url: Api.getProjectSection,
     method: 'GET',
@@ -97,7 +97,7 @@ export function apiGetDroneToken() {
 /**
  * @desc 获取未读消息数量
  */
-export function apiGetMsgReminderNum(params: { dataType: string }) {
+export function apiGetMsgReminderNum(params: { dataType: string }): Promise<any> {
   return $http.request({
     url: Api.getMsgReminderNum,
     method: 'GET',
@@ -108,7 +108,7 @@ export function apiGetMsgReminderNum(params: { dataType: string }) {
 /**
  * @desc 设置消息已读
  */
-export function apiSetMsgHaveRead(params: { dataType: string }) {
+export function apiSetMsgHaveRead(params: { dataType: string }): Promise<any> {
   return $http.request({
     url: Api.setMsgHaveRead,
     method: 'GET',

@@ -7,10 +7,11 @@ import useMessage from '@/hooks/useMessage'
 import { handleError } from './handleError'
 import { encipherRequestMiddleware, decryptResponseMiddleware } from '@/utils/encipherUtil'
 
+const { createMessage } = useMessage()
+
 export const setupInterceptors = (axiosInstance: AxiosInstance) => {
   const axiosCanceler = new AxiosCanceler()
   const router = useRouter()
-  const { createMessage } = useMessage()
 
   // 请求拦截器
   axiosInstance.interceptors.request.use(
@@ -39,8 +40,9 @@ export const setupInterceptors = (axiosInstance: AxiosInstance) => {
   // 响应拦截器
   axiosInstance.interceptors.response.use(
     (res: AxiosResponse) => {
-      res = decryptResponseMiddleware(res)
       res.config && axiosCanceler.removePending(res.config)
+      res = decryptResponseMiddleware(res)
+      res = handleDownloadFiles(res)
       const { data }: { data: any } = res
       if (data.code !== 20000) {
         createMessage.error(data.msg)
@@ -63,4 +65,31 @@ export const setupInterceptors = (axiosInstance: AxiosInstance) => {
       }
     },
   )
+}
+
+/**
+ * @description 下载文件
+ * @param res blob文件流
+ */
+const handleDownloadFiles = (res: AxiosResponse): AxiosResponse => {
+  if (res.config.responseType === 'blob') {
+    try {
+      // 后端需要指定显示，否则前端拿不到'content-disposition'这个属性
+      // Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+      const fileName = res.headers['content-disposition']?.split(';')[1].substr(9)
+      // 判断IE10
+      if ('msSaveOrOpenBlob' in window.navigator) {
+        ;(window.navigator as any).msSaveOrOpenBlob(res.data, decodeURI(fileName))
+      } else {
+        const elink = document.createElement('a')
+        elink.download = decodeURI(fileName)
+        elink.href = URL.createObjectURL(res.data)
+        elink.click()
+        URL.revokeObjectURL(elink.href) // 释放URL 对象
+      }
+    } catch (error) {
+      createMessage.error('下载失败，请重试')
+    }
+  }
+  return res
 }

@@ -12,7 +12,18 @@ export const serviceAxios: AxiosInstance = axios.create({
 setupInterceptors(serviceAxios)
 
 export const $http = {
-  request: (config: any) => {
+  // 普通请求
+  request: (config: any) => serviceAxios(config),
+  // 上传请求
+  uploadFiles: (config: any) => {
+    const formData = new FormData()
+    Object.keys(config.data).forEach((key) => {
+      formData.append(key, config.data[key as any])
+    })
+    config.data = formData
+    config.headers = {
+      'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    }
     return serviceAxios(config)
   },
 }

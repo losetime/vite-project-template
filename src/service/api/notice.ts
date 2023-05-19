@@ -10,7 +10,7 @@ enum Api {
 /**
  * @description: 获取短信告警列表
  */
-export function apiGetAlarmList() {
+export function apiGetAlarmList(): Promise<any> {
   return $http.request({
     url: Api.getAlarmList,
     method: 'GET',
@@ -22,7 +22,7 @@ export function apiGetAlarmList() {
 /**
  * @description: 获取告警配置列表
  */
-export function apiGetAlarmConfigList() {
+export function apiGetAlarmConfigList(): Promise<any> {
   return $http.request({
     url: Api.getAlarmConfigList,
     method: 'GET',

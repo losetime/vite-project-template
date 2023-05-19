@@ -1,130 +1,104 @@
 <template>
   <div class="storehouse-overview-wrapper">
-    <div class="stats-info">
-      <div class="stats-item" @click="handleShortcut('WarehouseCheck')">
-        <img src="../../assets/images/storehouse/warehousing.png" alt="" />
-        <p>快捷入库</p>
+    <div class="left-content-wrap">
+      <div class="to-do-wrap">
+        <div class="title">待办事项</div>
+        <div class="content-wrap">
+          <template v-for="item in todoRecord" :key="item.id">
+            <div class="item-wrap" v-if="item.dataType === 'OVER_CHECK'">
+              <a-checkbox v-show="false" />
+              <div class="actual-content">
+                <div class="label-wrap">
+                  <p class="label-text">{{ item.title }}</p>
+                  <a-button type="link" @click="handleOverCheck(item)">
+                    去处理
+                    <right-outlined style="padding-top: 5px" />
+                  </a-button>
+                </div>
+                <p class="inspection-time">
+                  脱检日期：<span style="color: #ff4c50">{{ item.infoJson.inspectEnd }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="item-wrap" v-else-if="item.dataType === 'STOCK_LACK'">
+              <a-checkbox @change="onStockLackChange(item)" />
+              <div class="actual-content">
+                <p class="label-text">
+                  {{ item.title }}
+                </p>
+                <div class="desc-wrap">
+                  <p class="desc-text">{{ item.infoJson.tooltype }}</p>
+                  <span class="handle-btn" @click="handleNotRemind">不再提醒</span>
+                </div>
+              </div>
+            </div>
+            <div class="item-wrap" v-else>
+              <a-checkbox @change="onStockLackChange(item)" />
+              <div class="actual-content">
+                <p class="label-text">
+                  {{ item.title }}
+                </p>
+                <div class="desc-wrap">
+                  <p class="desc-text">{{ item.infoJson.toolRecPeople }}领用{{ item.infoJson.tooltype }}</p>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
       </div>
-      <div class="stats-item" @click="handleShortcut('CycleReminder')">
-        <img src="../../assets/images/storehouse/test-cycle.png" alt="" />
-        <p>检验周期维护</p>
-      </div>
-      <div class="stats-item" @click="handleShortcut('WarehouseStatus')">
-        <img src="../../assets/images/storehouse/storehouse-status.png" alt="" />
-        <p>在库状态</p>
-      </div>
-      <div class="stats-item" @click="handleShortcut('VideosCollection')">
-        <img src="../../assets/images/storehouse/video-manage.png" alt="" />
-        <p>视频管理</p>
+      <div class="processed-wrap">
+        <div class="title">已处理</div>
+        <div class="content-wrap">
+          <template v-for="item in doneMatter" :key="item.id">
+            <div class="item-wrap" v-if="item.dataType === 'OVER_CHECK'">
+              <a-checkbox :checked="true" />
+              <div class="actual-content">
+                <div class="label-wrap">
+                  <p class="label-text">{{ item.title }}</p>
+                </div>
+                <p class="inspection-time">
+                  脱检日期：<span style="color: #ff4c50">{{ item.infoJson.inspectEnd }}</span>
+                </p>
+              </div>
+            </div>
+            <div class="item-wrap" v-else-if="item.dataType === 'STOCK_LACK'">
+              <a-checkbox :checked="true" />
+              <div class="actual-content">
+                <p class="label-text">
+                  {{ item.title }}
+                </p>
+                <div class="desc-wrap">
+                  <p class="desc-text">{{ item.infoJson.tooltype }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="item-wrap" v-else>
+              <a-checkbox :checked="true" />
+              <div class="actual-content">
+                <p class="label-text">
+                  {{ item.title }}
+                </p>
+                <div class="desc-wrap">
+                  <p class="desc-text">{{ item.infoJson.toolRecPeople }}领用{{ item.infoJson.tooltype }}</p>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
       </div>
     </div>
     <div class="body-wrap">
-      <div class="left-content-wrap">
-        <div class="to-do-wrap">
-          <div class="title">待办事项</div>
-          <div class="content-wrap">
-            <template v-for="item in todoRecord" :key="item.id">
-              <div class="item-wrap" v-if="item.dataType === 'OVER_CHECK'">
-                <a-checkbox v-show="false" />
-                <div class="actual-content">
-                  <div class="label-wrap">
-                    <p class="label-text">{{ item.title }}</p>
-                    <a-button type="link" @click="handleOverCheck(item)">
-                      去处理
-                      <right-outlined style="padding-top: 5px" />
-                    </a-button>
-                  </div>
-                  <p class="inspection-time">
-                    脱检日期：<span style="color: #ff4c50">{{ item.infoJson.inspectEnd }}</span>
-                  </p>
-                </div>
-              </div>
-              <div class="item-wrap" v-else-if="item.dataType === 'STOCK_LACK'">
-                <a-checkbox @change="onStockLackChange(item)" />
-                <div class="actual-content">
-                  <p class="label-text">
-                    {{ item.title }}
-                  </p>
-                  <div class="desc-wrap">
-                    <p class="desc-text">{{ item.infoJson.tooltype }}</p>
-                    <span class="handle-btn" @click="handleNotRemind">不再提醒</span>
-                  </div>
-                </div>
-              </div>
-              <div class="item-wrap" v-else>
-                <a-checkbox @change="onStockLackChange(item)" />
-                <div class="actual-content">
-                  <p class="label-text">
-                    {{ item.title }}
-                  </p>
-                  <div class="desc-wrap">
-                    <p class="desc-text">{{ item.infoJson.toolRecPeople }}领用{{ item.infoJson.tooltype }}</p>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
+      <div class="stats-info">
+        <div class="stats-item" @click="handleShortcut('CycleReminder')">
+          <img src="../../assets/images/storehouse/test-cycle.png" alt="" />
+          <p>检验周期维护</p>
         </div>
-        <div class="processed-wrap">
-          <div class="title">已处理</div>
-          <div class="content-wrap">
-            <template v-for="item in doneMatter" :key="item.id">
-              <div class="item-wrap" v-if="item.dataType === 'OVER_CHECK'">
-                <a-checkbox :checked="true" />
-                <div class="actual-content">
-                  <div class="label-wrap">
-                    <p class="label-text">{{ item.title }}</p>
-                  </div>
-                  <p class="inspection-time">
-                    脱检日期：<span style="color: #ff4c50">{{ item.infoJson.inspectEnd }}</span>
-                  </p>
-                </div>
-              </div>
-              <div class="item-wrap" v-else-if="item.dataType === 'STOCK_LACK'">
-                <a-checkbox :checked="true" />
-                <div class="actual-content">
-                  <p class="label-text">
-                    {{ item.title }}
-                  </p>
-                  <div class="desc-wrap">
-                    <p class="desc-text">{{ item.infoJson.tooltype }}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item-wrap" v-else>
-                <a-checkbox :checked="true" />
-                <div class="actual-content">
-                  <p class="label-text">
-                    {{ item.title }}
-                  </p>
-                  <div class="desc-wrap">
-                    <p class="desc-text">{{ item.infoJson.toolRecPeople }}领用{{ item.infoJson.tooltype }}</p>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </div>
+        <div class="stats-item" @click="handleShortcut('VideosCollection')">
+          <img src="../../assets/images/storehouse/video-manage.png" alt="" />
+          <p>视频管理</p>
         </div>
       </div>
       <div class="right-content-wrap">
-        <div class="item-wrap">
-          <div class="title-wrap">
-            <span class="title-text">工器具应领实领对比（数量/类型）</span>
-            <a-range-picker
-              v-model:value="timeRange"
-              valueFormat="YYYY-MM-DD"
-              separator="至"
-              @change="getToolsReceiveAndReturnCompared"
-            />
-          </div>
-          <div class="chart-wrap">
-            <Bar
-              :xAxis="toolsReceiveAndReturnCompared?.xAxis || []"
-              :yAxis="toolsReceiveAndReturnCompared?.yAxis || []"
-              :series="toolsReceiveAndReturnCompared?.series || []"
-            />
-          </div>
-        </div>
         <div class="bottom-wrap">
           <div class="item-wrap" v-show="showProportion">
             <div class="title-wrap" @click="showProportion = false">
@@ -183,23 +157,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import {
-  apiGetDashboardData,
-  apiGetToolReturnRate,
-  apiGetToolReturnProportion,
-  apiGetToolStatusRate,
-  apiGetToolNoCheckCompared,
-  apiGetToolTodoRecord,
-  apiHandleNotRemind,
-  apiHandleTodoDone,
-} from '@/service/api/storehouse'
+import { apiGetToolTodoRecord, apiHandleNotRemind, apiHandleTodoDone, apiGetToolCount } from '@/service/api/storehouse'
 import { dateUtil } from '@/utils/dateUtil'
-import Bar from '@/components/charts/Bar.vue'
 import Pie from '@/components/charts/Pie.vue'
 import useSectionCode from '@/hooks/useSectionCode'
 import { RightOutlined, LeftOutlined } from '@ant-design/icons-vue'
-import { router } from '@/router'
+import { useRouter } from 'vue-router'
 import InspectionDone from '@/components/storehouse/InspectionDone.vue'
+
+const router = useRouter()
 
 const todoRecord = ref<any[]>([])
 
@@ -211,7 +177,6 @@ const { sectionCode } = useSectionCode(() => {
   getToolReturnRate()
   getToolStatusRate()
   timeRange.value = [dateUtil().subtract(7, 'day').format('YYYY-MM-DD'), dateUtil().format('YYYY-MM-DD')]
-  getToolsReceiveAndReturnCompared()
   getToolTodoRecord('0')
   getToolTodoRecord('1')
 })
@@ -283,44 +248,6 @@ const handleShortcut = (routeName: string) => {
   })
 }
 
-// ---------------------------------工器具应领实领对比---------------------------------------
-
-const toolsReceiveAndReturnCompared = ref<any>()
-
-const getToolsReceiveAndReturnCompared = async () => {
-  const { code, data } = await apiGetDashboardData({
-    bidNo: sectionCode.value,
-    type: 'shouldAndActual',
-    startTime: timeRange.value[0],
-    endTime: timeRange.value[1],
-  })
-  if (code === 20000) {
-    toolsReceiveAndReturnCompared.value = {
-      xAxis: data.xAxis,
-      series: [
-        {
-          name: data.series[0].name,
-          data: data.series[0].data,
-          type: 'bar',
-          barMaxWidth: 10,
-          itemStyle: {
-            borderRadius: [5, 5, 0, 0],
-          },
-        },
-        {
-          name: data.series[1].name,
-          data: data.series[1].data,
-          type: 'bar',
-          barMaxWidth: 10,
-          itemStyle: {
-            borderRadius: [5, 5, 0, 0],
-          },
-        },
-      ],
-    }
-  }
-}
-
 // ---------------------------------工器具出库数量-----------------------------------------
 
 const returnRateInstance = ref()
@@ -337,7 +264,7 @@ const toolReturnProportion = ref<any>({})
  * @desc 工器具归还率
  */
 const getToolReturnRate = async () => {
-  const { code, data } = await apiGetToolReturnRate({ bidNo: sectionCode.value })
+  const { code, data } = await apiGetToolCount({ bidNo: sectionCode.value, dataType: 'returnRate' })
   if (code === 20000) {
     toolReturnRate.value = {
       series: [
@@ -349,12 +276,7 @@ const getToolReturnRate = async () => {
           },
           label: {
             formatter: (obj: any) => {
-              // console.log(obj)
-              if (obj.name === '已归还') {
-                return `${obj.percent}% \n详情 >`
-              } else {
-                return `${obj.percent}%`
-              }
+              return `${obj.percent}% \n详情 >`
             },
             lineHeight: 18,
             backgroundColor: 'none',
@@ -379,15 +301,19 @@ const getToolReturnRate = async () => {
 const onReturnRate = () => {
   returnRateInstance.value.chartInstance.on('click', { name: '已归还' }, function () {
     showProportion.value = true
-    getToolReturnProportion()
+    getToolReturnProportion('returnTool')
+  })
+  returnRateInstance.value.chartInstance.on('click', { name: '待归还' }, function () {
+    showProportion.value = true
+    getToolReturnProportion('needReturnTool')
   })
 }
 
 /**
  * @desc 已归还工器具占比
  */
-const getToolReturnProportion = async () => {
-  const { code, data } = await apiGetToolReturnProportion({ bidNo: sectionCode.value })
+const getToolReturnProportion = async (type: string) => {
+  const { code, data } = await apiGetToolCount({ bidNo: sectionCode.value, dataType: type })
   if (code === 20000) {
     toolReturnProportion.value = {
       series: [
@@ -403,7 +329,7 @@ const getToolReturnProportion = async () => {
           },
           data: data.map((item: any) => ({
             value: item.count,
-            name: item.label,
+            name: item.type,
           })),
         },
       ],
@@ -431,7 +357,7 @@ const toolNoCheckCompared = ref()
  * @desc 工器具状态占比
  */
 const getToolStatusRate = async () => {
-  const { code, data } = await apiGetToolStatusRate({ bidNo: sectionCode.value })
+  const { code, data } = await apiGetToolCount({ bidNo: sectionCode.value, dataType: 'checkRate' })
   if (code === 20000) {
     toolStatusRate.value = {
       series: [
@@ -443,12 +369,7 @@ const getToolStatusRate = async () => {
           },
           label: {
             formatter: (obj: any) => {
-              console.log(obj)
-              if (obj.name === '脱检工器具') {
-                return `${obj.percent}% \n详情 >`
-              } else {
-                return `${obj.percent}%`
-              }
+              return `${obj.percent}% \n详情 >`
             },
             lineHeight: 18,
             backgroundColor: 'none',
@@ -473,15 +394,19 @@ const getToolStatusRate = async () => {
 const onToolStatus = () => {
   toolStatusInstance.value.chartInstance.on('click', { name: '脱检工器具' }, function () {
     showDismissalTool.value = true
-    getToolNoCheckCompared()
+    getToolNoCheckCompared('overCheckTool')
+  })
+  toolStatusInstance.value.chartInstance.on('click', { name: '正常工器具' }, function () {
+    showDismissalTool.value = true
+    getToolNoCheckCompared('hasCheckTool')
   })
 }
 
 /**
  * @desc 脱检工器具占比
  */
-const getToolNoCheckCompared = async () => {
-  const { code, data } = await apiGetToolNoCheckCompared({ bidNo: sectionCode.value })
+const getToolNoCheckCompared = async (type: string) => {
+  const { code, data } = await apiGetToolCount({ bidNo: sectionCode.value, dataType: type })
   if (code === 20000) {
     toolNoCheckCompared.value = {
       series: [
@@ -497,7 +422,7 @@ const getToolNoCheckCompared = async () => {
           },
           data: data.map((item: any) => ({
             value: item.count,
-            name: item.label,
+            name: item.type,
           })),
         },
       ],
@@ -514,112 +439,110 @@ const getToolNoCheckCompared = async () => {
 
 <style lang="less" scoped>
 .storehouse-overview-wrapper {
-  .stats-info {
-    display: flex;
-    justify-content: space-between;
-    .stats-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 116px;
-      margin-right: 20px;
-      padding: 14px;
-      background-color: #ffffff;
-      cursor: pointer;
-      img {
-        width: 55px;
-        height: 55px;
-      }
-      p {
-        margin: 0;
-        font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  .left-content-wrap {
+    width: 320px;
+    background-color: #ffffff;
+    .to-do-wrap,
+    .processed-wrap {
+      width: 100%;
+      padding: 24px;
+      .title {
         color: #333333;
+        font-size: 16px;
+        font-weight: bold;
       }
-    }
-    .stats-item:last-child {
-      margin-right: 0;
-    }
-  }
-  .body-wrap {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    .left-content-wrap {
-      width: 320px;
-      height: 852px;
-      background-color: #ffffff;
-      .to-do-wrap,
-      .processed-wrap {
-        width: 100%;
-        padding: 24px;
-        .title {
-          color: #333333;
-          font-size: 16px;
-          font-weight: bold;
-        }
-        .content-wrap {
-          margin-top: 16px;
-          max-height: 340px;
-          overflow-y: auto;
-          .item-wrap {
-            display: flex;
-            align-items: center;
-            background-color: #f7fafd;
-            margin-bottom: 20px;
-            padding: 20px 14px;
-            .label-text {
-              font-size: 16px;
-              color: #333333;
-              margin: 0;
-            }
-            .actual-content {
-              margin-left: 14px;
-              .label-wrap,
-              .desc-wrap {
-                width: 200px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                .label-text {
-                  font-size: 16px;
-                  color: #333333;
-                  margin: 0;
-                }
-                .desc-text,
-                .handle-btn {
-                  font-size: 14px;
-                  color: #778795;
-                  margin: 0;
-                }
-                .handle-btn {
-                  cursor: pointer;
-                }
-                .ant-btn {
-                  padding: 0;
-                }
+      .content-wrap {
+        margin-top: 16px;
+        max-height: 340px;
+        overflow-y: auto;
+        .item-wrap {
+          display: flex;
+          align-items: center;
+          background-color: #f7fafd;
+          margin-bottom: 20px;
+          padding: 20px 14px;
+          .label-text {
+            font-size: 16px;
+            color: #333333;
+            margin: 0;
+          }
+          .actual-content {
+            margin-left: 14px;
+            .label-wrap,
+            .desc-wrap {
+              width: 200px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .label-text {
+                font-size: 16px;
+                color: #333333;
+                margin: 0;
               }
-              .inspection-time {
+              .desc-text,
+              .handle-btn {
                 font-size: 14px;
                 color: #778795;
                 margin: 0;
               }
+              .handle-btn {
+                cursor: pointer;
+              }
+              .ant-btn {
+                padding: 0;
+              }
+            }
+            .inspection-time {
+              font-size: 14px;
+              color: #778795;
+              margin: 0;
             }
           }
-          .item-wrap:last-child {
-            margin-bottom: 0;
-          }
+        }
+        .item-wrap:last-child {
+          margin-bottom: 0;
         }
       }
-      .processed-wrap {
-        border-top: 1px solid #efefef;
-        opacity: 0.6;
+    }
+    .processed-wrap {
+      border-top: 1px solid #efefef;
+      opacity: 0.6;
+    }
+  }
+  .body-wrap {
+    flex: 1;
+    margin-left: 20px;
+    .stats-info {
+      display: flex;
+      justify-content: space-between;
+      .stats-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 116px;
+        margin-right: 20px;
+        padding: 14px;
+        background-color: #ffffff;
+        cursor: pointer;
+        img {
+          width: 55px;
+          height: 55px;
+        }
+        p {
+          margin: 0;
+          font-size: 18px;
+          color: #333333;
+        }
+      }
+      .stats-item:last-child {
+        margin-right: 0;
       }
     }
     .right-content-wrap {
-      flex: 1;
-      margin-left: 20px;
       .item-wrap {
         width: 100%;
         padding: 24px;

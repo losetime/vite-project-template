@@ -47,6 +47,7 @@ declare module '@vue/runtime-core' {
     ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     ATree: typeof import('ant-design-vue/es')['Tree']
     ATreeSelect: typeof import('ant-design-vue/es')['TreeSelect']
+    AUpload: typeof import('ant-design-vue/es')['Upload']
     Bar: typeof import('./src/components/charts/Bar.vue')['default']
     BidSection: typeof import('./src/components/common/BidSection.vue')['default']
     DeptDetail: typeof import('./src/components/setting/DeptDetail.vue')['default']

@@ -82,7 +82,7 @@ https://www.pnpm.cn/
 
 全局安装 npm-check
 
-```bssh
+```bash
 npm install -g npm-check
 ```
 

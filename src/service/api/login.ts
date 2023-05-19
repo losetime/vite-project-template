@@ -27,7 +27,7 @@ export function apiSubmitLogin(params: SubmitLoginInterface): Promise<any> {
   return $http.request({
     url: Api.submitLogin,
     method: 'POST',
-    params,
+    data: params,
   })
 }
 
@@ -58,6 +58,6 @@ export function apiForceUpdatePassword(params: IForceUpdatePassword): Promise<an
   return $http.request({
     url: Api.forceUpdatePassword,
     method: 'POST',
-    params,
+    data: params,
   })
 }
